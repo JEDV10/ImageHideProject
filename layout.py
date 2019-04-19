@@ -2,10 +2,11 @@ from tkinter import *
 from tkinter import messagebox
 import operations as op
 
-'''
+"""
 Main class. It implements the main layout of the application.
 Each functionality use one or several functions from "operations.py" module.
-'''
+"""
+
 
 def update(event):
     charCounter.set(str(len(textBlock.get("1.0", 'end-1c'))))
@@ -18,18 +19,18 @@ root = Tk()
 barMenu = Menu(root)
 root.config(menu=barMenu, width=300, height=300)
 # File menu
-fileMenu = Menu(barMenu, tearoff = 0)
+fileMenu = Menu(barMenu, tearoff=0)
 fileMenu.add_command(label="Save")
 fileMenu.add_command(label="Save As...")
 fileMenu.add_command(label="Clear", command=lambda:op.deleteFields(inputImagePath, charCounter, textBlock))
 fileMenu.add_separator()
 fileMenu.add_command(label="Exit", command=lambda:op.exitApp(root))
 # App menu
-appMenu = Menu(barMenu, tearoff = 0)
+appMenu = Menu(barMenu, tearoff=0)
 appMenu.add_command(label="Hide text")
 appMenu.add_command(label="Recover text")
 # Help menu
-helpMenu = Menu(barMenu, tearoff = 0)
+helpMenu = Menu(barMenu, tearoff=0)
 helpMenu.add_command(label="Help")
 helpMenu.add_command(label="About")
 
@@ -50,7 +51,7 @@ pathLabel = Label(pathFrame, text="Image Path:")
 pathLabel.grid(row=0, column=0, sticky="e", padx=10, pady=10)
 pathEntry = Entry(pathFrame, textvariable=inputImagePath, width=47)
 pathEntry.grid(row=0, column=1, padx=10, pady=10)
-pathButton = Button(pathFrame, text="Abrir fichero", command=lambda:op.imagePathFinder(inputImagePath))
+pathButton = Button(pathFrame, text="Select Image", command=lambda:op.imagePathFinder(inputImagePath))
 pathButton.grid(row=0, column=2, sticky="e", padx=10, pady=10)
 
 textFrame = Frame(root)
