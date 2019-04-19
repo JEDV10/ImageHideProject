@@ -7,6 +7,10 @@ Main class. It implements the main layout of the application.
 Each functionality use one or several functions from "operations.py" module.
 '''
 
+def update(event):
+    charCounter.set(str(len(textBlock.get("1.0", 'end-1c'))))
+
+
 # ----- Graphic Interface -----
 root = Tk()
 
@@ -37,6 +41,7 @@ barMenu.add_cascade(label="Help", menu=helpMenu)
 # ----- Input Elements -----
 inputImagePath = StringVar()
 inputText = StringVar()
+charCounter = StringVar()
 
 pathFrame = Frame(root)
 pathFrame.pack()
@@ -44,7 +49,7 @@ pathFrame.pack()
 # Image Path
 pathLabel = Label(pathFrame, text="Image Path:")
 pathLabel.grid(row=0, column=0, sticky="e", padx=10, pady=10)
-pathEntry = Entry(pathFrame, textvariable=inputImagePath)
+pathEntry = Entry(pathFrame, textvariable=inputImagePath, width=47)
 pathEntry.grid(row=0, column=1, padx=10, pady=10)
 pathButton = Button(pathFrame, text="Abrir fichero", command=lambda:op.imagePathFinder(inputImagePath))
 pathButton.grid(row=0, column=2, sticky="e", padx=10, pady=10)
@@ -54,12 +59,16 @@ textFrame.pack()
 
 # Text
 textLabel = Label(textFrame, text="Text:")
-textLabel.grid(row=1, column=0, sticky="e", padx=5, pady=10)
-textBlock = Text(textFrame, width=25, height=10)
-textBlock.grid(row=1, column=1, padx=10, pady=10)
+textLabel.grid(row=0, column=0, sticky="ne", padx=5, pady=10)
+textBlock = Text(textFrame, width=50, height=10)
+textBlock.grid(row=0, column=1, padx=10, pady=10)
+textBlock.bind("<KeyRelease>", update)
 scrollVert = Scrollbar(textFrame, command=textBlock.yview)
-scrollVert.grid(row=1, column=2, sticky="nsew")
+scrollVert.grid(row=0, column=2, sticky="nsew")
 textBlock.config(yscrollcommand=scrollVert.set)
+charLabel = Label(textFrame, textvariable=charCounter)
+charLabel.grid(row=1, column=0, sticky="ne", padx=10, pady=10)
+
 
 # ----- Operation Buttons -----
 buttonsFrame = Frame(root)
@@ -71,6 +80,7 @@ hideButton.grid(row=0, column=0, sticky="e", padx=10, pady=10)
 # Recover
 recoverButton = Button(buttonsFrame, text="Recover Text")
 recoverButton.grid(row=0, column=1, sticky="e", padx=10, pady=10)
+
 
 
 root.mainloop()

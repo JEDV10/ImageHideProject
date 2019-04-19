@@ -8,3 +8,5 @@ def imagePathFinder(path):
     '''
     image = filedialog.askopenfilename(title="Open", initialdir="C:", filetypes=(("Images", "*.png"), ("All Files", "*.*")))
     path.set(image)
+
+
