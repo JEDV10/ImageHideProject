@@ -21,7 +21,7 @@ root.config(menu=barMenu, width=300, height=300)
 fileMenu = Menu(barMenu, tearoff = 0)
 fileMenu.add_command(label="Save")
 fileMenu.add_command(label="Save As...")
-fileMenu.add_command(label="Clear")
+fileMenu.add_command(label="Clear", command=lambda:op.deleteFields(inputImagePath, charCounter, textBlock))
 fileMenu.add_separator()
 fileMenu.add_command(label="Exit")
 # App menu
@@ -40,7 +40,6 @@ barMenu.add_cascade(label="Help", menu=helpMenu)
 
 # ----- Input Elements -----
 inputImagePath = StringVar()
-inputText = StringVar()
 charCounter = StringVar()
 
 pathFrame = Frame(root)
