@@ -23,7 +23,7 @@ fileMenu.add_command(label="Save")
 fileMenu.add_command(label="Save As...")
 fileMenu.add_command(label="Clear", command=lambda:op.deleteFields(inputImagePath, charCounter, textBlock))
 fileMenu.add_separator()
-fileMenu.add_command(label="Exit")
+fileMenu.add_command(label="Exit", command=lambda:op.exitApp(root))
 # App menu
 appMenu = Menu(barMenu, tearoff = 0)
 appMenu.add_command(label="Hide text")

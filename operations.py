@@ -1,6 +1,7 @@
 import numpy as np
 from tkinter import *
 from tkinter import filedialog
+from tkinter import messagebox
 
 
 def imagePathFinder(path):
@@ -20,3 +21,11 @@ def deleteFields(inputImagePath, charCounter, textBlock):
     textBlock.delete(1.0, END)
 
 
+def exitApp(root):
+    '''
+    Check that the user really wants to quit.
+    In that case, destroy root
+    '''
+    decision = messagebox.askquestion("Exit", "Do you wnat to exit?")
+    if (decision == "yes"):
+        root.destroy()
