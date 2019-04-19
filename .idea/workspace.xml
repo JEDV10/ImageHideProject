@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="726dd01a-b5d9-480c-94ff-e0f42494776b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/layout.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/operations.py" beforeDir="false" afterPath="$PROJECT_DIR$/operations.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,11 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/layout.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="19">
+              <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -28,8 +25,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/operations.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+            <state relative-caret-position="114">
+              <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -37,8 +37,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../Python/Práctica guiada/CRUD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1996">
-              <caret line="199" selection-start-line="199" selection-end-line="199" selection-end-column="15" />
+            <state relative-caret-position="342">
+              <caret line="189" column="61" lean-forward="true" selection-start-line="180" selection-end-line="189" selection-end-column="61" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -61,6 +61,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/../Python/Práctica guiada/CRUD.py" />
         <option value="$PROJECT_DIR$/operations.py" />
         <option value="$PROJECT_DIR$/layout.py" />
       </list>
@@ -92,7 +93,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Python/76 - Documentación y pruebas II.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Python/Práctica guiada/CRUD.py" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -176,15 +177,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/operations.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+        <state relative-caret-position="114">
+          <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../Python/Práctica guiada/CRUD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1996">
-          <caret line="199" selection-start-line="199" selection-end-line="199" selection-end-column="15" />
+        <state relative-caret-position="342">
+          <caret line="189" column="61" lean-forward="true" selection-start-line="180" selection-end-line="189" selection-end-column="61" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
@@ -193,11 +197,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/layout.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="19">
+          <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
         </state>
       </provider>
     </entry>

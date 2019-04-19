@@ -1,5 +1,10 @@
 import numpy as np
+from tkinter import filedialog
 
 
-def testFunction (num1, num2):
-    return np.ones((num1, num2)).astype(int)
+def imagePathFinder(path):
+    '''
+    Obtain path to the main image
+    '''
+    image = filedialog.askopenfilename(title="Open", initialdir="C:", filetypes=(("Images", "*.png"), ("All Files", "*.*")))
+    path.set(image)
