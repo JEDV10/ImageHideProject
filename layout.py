@@ -21,8 +21,8 @@ barMenu = Menu(root)
 root.config(menu=barMenu, width=300, height=300)
 # File menu
 fileMenu = Menu(barMenu, tearoff=0)
-fileMenu.add_command(label="Save")
-fileMenu.add_command(label="Save As...")
+fileMenu.add_command(label="Save Image")
+fileMenu.add_command(label="Save Text")
 fileMenu.add_command(label="Clear", command=lambda:op.deleteFields(inputImagePath, charCounter, textBlock))
 fileMenu.add_separator()
 fileMenu.add_command(label="Exit", command=lambda:op.exitApp(root))
@@ -76,10 +76,10 @@ buttonsFrame = Frame(root)
 buttonsFrame.pack()
 
 # Hide
-hideButton = Button(buttonsFrame, text="Hide Text")
+hideButton = Button(buttonsFrame, text="Hide Text", command=lambda:op.hideText(textBlock.get("1.0", 'end-1c'), inputImagePath.get()))
 hideButton.grid(row=0, column=0, sticky="e", padx=10, pady=10)
 # Recover
-recoverButton = Button(buttonsFrame, text="Recover Text")
+recoverButton = Button(buttonsFrame, text="Recover Text", command=lambda:op.recoverText("C:/Users/EQUIPO/ImageHideProject.png"))
 recoverButton.grid(row=0, column=1, sticky="e", padx=10, pady=10)
 
 
