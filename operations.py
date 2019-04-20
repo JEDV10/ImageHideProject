@@ -35,37 +35,44 @@ def exitApp(root):
 
 
 # ----- Hide Text Operations -----
-"""
-end_char = [0, 0, 1, 0, 0, 0, 1, 1,
-            0, 0, 1, 0, 0, 1, 1, 0,
-            1, 1, 0, 0, 1, 1, 0, 1,
-            0, 1, 1, 0, 0, 0, 1, 1,
-            0, 1, 1, 0, 0, 0, 0, 1,
-            0, 1, 1, 1, 0, 0, 1, 0,
-            0, 1, 1, 0, 1, 1, 1, 1,
-            0, 0, 1, 0, 0, 1, 1, 0,
-            0, 0, 1, 0, 0, 0, 1, 1]
-"""
-end_char = "#&Ícaro&#"
+end_string = "#&Ícaro&#"
 
 def obtainAsciiRepresentation(char):
+    """
+    Return ASCII representation of given char
+    """
     return ord(char)
 
 def obtainBinaryRepresentation(num):
+    """
+    Return binary representation of given number (8 bits format)
+    """
     return bin(num)[2:].zfill(8)
 
 def changeLSB(byte, new_bit):
+    """
+    Change LSB of given byte
+    """
     return byte[:-1] + str(new_bit)
 
 def binaryToDecimal(binary):
+    """
+    Return decimal representation of given binary number
+    """
     return int(binary, 2)
 
 def changeColor(original_color, bit):
+    """
+    Change LSB of given byte
+    """
     binary_color = obtainBinaryRepresentation(original_color)
     mod_color = changeLSB(binary_color, bit)
     return binaryToDecimal(mod_color)
 
 def obtainBitsList(text):
+    """
+    Return list with each bit of each byte of each ASCII representation of given text
+    """
     list = []
     for char in text:
         ascii_representation = obtainAsciiRepresentation(char)
@@ -75,6 +82,12 @@ def obtainBitsList(text):
     return list
 
 def hideText(message, original_image_path, output_image_path="C:/Users/EQUIPO/ImageHideProject.png"):
+    """
+    Main function to hide text inside images.
+    It opens the image at given path, converts the given message to binary and
+    modify LSBs of each pixel in the image acording to the binary representation
+    of the original message
+    """
     print("Hiding message...")
     print(original_image_path)
     print(type(original_image_path))
@@ -85,14 +98,13 @@ def hideText(message, original_image_path, output_image_path="C:/Users/EQUIPO/Im
 
     (columns, rows) = image.size
 
-    list = obtainBitsList(message + end_char)
+    list = obtainBitsList(message + end_string)
     counter = 0
     total_lenght = len(list)
     for x in range(rows):
         for y in range(columns):
             if counter < total_lenght:
                 pixel = pixels[x, y]
-
                 red = pixel[0]
                 green = pixel[1]
                 blue = pixel[2]
@@ -133,12 +145,23 @@ def hideText(message, original_image_path, output_image_path="C:/Users/EQUIPO/Im
 
 # ----- Recover Text Operations -----
 def obtainLSB(byte):
+    """
+    Obtain LSB of given byte
+    """
     return byte[-1]
 
 def charFromAscii(numero):
+    """
+    Return char representation of given decimal number
+    """
     return chr(numero)
 
 def recoverText(textBlock, hidden_text_image_path):
+    """
+    Main function to recover text from images.
+    It opens the modified image at given path, extracts LSBs from each pixel and
+    reconstruct the message until it finds termination string
+    """
     print("Recovering message...")
     image = Image.open(hidden_text_image_path)
     print(hidden_text_image_path)
@@ -149,20 +172,17 @@ def recoverText(textBlock, hidden_text_image_path):
 
     byte = ""
     message = ""
-
     for x in range(rows):
         for y in range(columns):
             pixel = pixels[x, y]
-
             red = pixel[0]
             green = pixel[1]
             blue = pixel[2]
 
-
             byte += obtainLSB(obtainBinaryRepresentation(red))
             if len(byte) >= 8:
                 message += charFromAscii(binaryToDecimal(byte))
-                if (message[-9:] == end_char):
+                if (message[-9:] == end_string):
                     message = message[0:len(message) - 9]
                     break
                 byte = ""
@@ -170,7 +190,7 @@ def recoverText(textBlock, hidden_text_image_path):
             byte += obtainLSB(obtainBinaryRepresentation(green))
             if len(byte) >= 8:
                 message += charFromAscii(binaryToDecimal(byte))
-                if (message[-9:] == end_char):
+                if (message[-9:] == end_string):
                     message = message[0:len(message) - 9]
                     break
                 byte = ""
@@ -178,7 +198,7 @@ def recoverText(textBlock, hidden_text_image_path):
             byte += obtainLSB(obtainBinaryRepresentation(blue))
             if len(byte) >= 8:
                 message += charFromAscii(binaryToDecimal(byte))
-                if (message[-9:] == end_char):
+                if (message[-9:] == end_string):
                     message = message[0:len(message) - 9]
                     break
                 byte = ""
