@@ -2,6 +2,7 @@ import math
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
+from datetime import datetime
 from PIL import Image
 
 
@@ -32,6 +33,24 @@ def exitApp(root):
     decision = messagebox.askquestion("Exit", "Do you want to exit?")
     if decision == "yes":
         root.destroy()
+
+
+def saveText(text):
+    """
+    Save text in "Text" widget.
+    Creates a ".txt" file
+    """
+    now = datetime.now()
+    date_format = "%Y-%m-%d_%H.%M.%S"
+    date_string = now.strftime(date_format)
+    filename = filedialog.asksaveasfilename(initialfile= "recovered_text_"+date_string+".txt",
+                                            defaultextension=".txt", title="Select file", initialdir="C:",
+                                            filetypes=(("Text File", "*.txt"), ("All Files", "*.*")))
+    f = open(filename, 'w')
+    f.write(text)
+    f.close()
+    messagebox.showinfo("Info", "Text file saved correctly")
+
 
 
 # ----- Hide Text Operations -----
