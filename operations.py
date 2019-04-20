@@ -87,9 +87,9 @@ def obtainAsciiRepresentation(char):
 
 def obtainBinaryRepresentation(num):
     """
-    Return binary representation of given number (8 bits format)
+    Return binary representation of given number (16 bits format)
     """
-    return bin(num)[2:].zfill(8)
+    return bin(num)[2:].zfill(16)
 
 def changeLSB(byte, new_bit):
     """
@@ -180,7 +180,7 @@ def hideText(message, original_image_path):
 
         if (counter < total_lenght):
             messagebox.showwarning("Warning", "Warning: {} remaining chars."
-                  .format(math.floor((total_lenght - counter) / 8)))
+                  .format(math.floor((total_lenght - counter) / 16)))
 
         initial_image_path = obtainInitOutputImagePath(original_image_path)
         saveImage(initial_image_path, image)
@@ -232,7 +232,7 @@ def recoverText(textBlock):
                 blue = pixel[2]
 
                 byte += obtainLSB(obtainBinaryRepresentation(red))
-                if len(byte) >= 8:
+                if len(byte) >= 16:
                     message += charFromAscii(binaryToDecimal(byte))
                     if (message[-len(head_string):] == head_string):
                         message = ""
@@ -243,7 +243,7 @@ def recoverText(textBlock):
                     byte = ""
 
                 byte += obtainLSB(obtainBinaryRepresentation(green))
-                if len(byte) >= 8:
+                if len(byte) >= 16:
                     message += charFromAscii(binaryToDecimal(byte))
                     if (message[-len(head_string):] == head_string):
                         message = ""
@@ -254,7 +254,7 @@ def recoverText(textBlock):
                     byte = ""
 
                 byte += obtainLSB(obtainBinaryRepresentation(blue))
-                if len(byte) >= 8:
+                if len(byte) >= 16:
                     message += charFromAscii(binaryToDecimal(byte))
                     if (message[-len(head_string):] == head_string):
                         message = ""
