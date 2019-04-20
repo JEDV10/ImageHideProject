@@ -35,14 +35,21 @@ def exitApp(root):
         root.destroy()
 
 
+def obtainDateString():
+    """
+    Return string with current date in specific YYYY-MM-DD_HH.mm.SS format
+    """
+    now = datetime.now()
+    date_format = "%Y-%m-%d_%H.%M.%S"
+    return now.strftime(date_format)
+
+
 def saveText(text):
     """
     Save text in "Text" widget.
     Creates a ".txt" file
     """
-    now = datetime.now()
-    date_format = "%Y-%m-%d_%H.%M.%S"
-    date_string = now.strftime(date_format)
+    date_string = obtainDateString()
     filename = filedialog.asksaveasfilename(initialfile= "ImageHide_text_"+date_string+".txt",
                                             defaultextension=".txt", title="Select file", initialdir="C:",
                                             filetypes=(("Text File", "*.txt"), ("All Files", "*.*")))
@@ -50,6 +57,20 @@ def saveText(text):
     f.write(text)
     f.close()
     messagebox.showinfo("Info", "Text file saved correctly")
+
+
+def saveImage(initial_image_path, image):
+    """
+    Save new image with hidden message.
+    Creates a ".png" file
+    """
+    date_string = obtainDateString()
+    filename = filedialog.asksaveasfilename(initialfile="ImageHide_image_" + date_string + ".png",
+                                            defaultextension=".png", title="Select file",
+                                            initialdir=initial_image_path,
+                                            filetypes=(("Images", "*.png"), ("All Files", "*.*")))
+    image.save(filename)
+    messagebox.showinfo("Info", "Modified image saved correctly")
 
 
 
@@ -99,6 +120,12 @@ def obtainBitsList(text):
         for bit in binary_representation:
             list.append(bit)
     return list
+
+def obtainInitOutputImagePath(original_path):
+    """
+    Return path to folder where is the original path
+    """
+    return original_path[:(original_path.rfind("/"))]
 
 def hideText(message, original_image_path, output_image_path="C:/Users/EQUIPO/ImageHideProject.png"):
     """
@@ -159,7 +186,9 @@ def hideText(message, original_image_path, output_image_path="C:/Users/EQUIPO/Im
         print("Warning: {} remaining chars."
               .format(math.floor((total_lenght - counter) / 8)))
 
-    image.save(output_image_path)
+    initial_image_path = obtainInitOutputImagePath(original_image_path)
+    saveImage(initial_image_path, image)
+    #image.save(output_image_path)
 
 
 # ----- Recover Text Operations -----
@@ -201,8 +230,8 @@ def recoverText(textBlock, hidden_text_image_path):
             byte += obtainLSB(obtainBinaryRepresentation(red))
             if len(byte) >= 8:
                 message += charFromAscii(binaryToDecimal(byte))
-                if (message[-9:] == end_string):
-                    message = message[0:len(message) - 9]
+                if (message[-len(end_string):] == end_string):
+                    message = message[0:len(message) - len(end_string)]
                     break
                 byte = ""
 
