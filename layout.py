@@ -27,8 +27,9 @@ fileMenu.add_separator()
 fileMenu.add_command(label="Exit", command=lambda:op.exitApp(root))
 # App menu
 appMenu = Menu(barMenu, tearoff=0)
-appMenu.add_command(label="Hide text")
-appMenu.add_command(label="Recover text")
+appMenu.add_command(label="Hide text", command=lambda:op.hideText(textBlock.get("1.0", 'end-1c'),
+                                                                  inputImagePath.get()))
+appMenu.add_command(label="Recover text", command=lambda:op.recoverText(textBlock))
 # Help menu
 helpMenu = Menu(barMenu, tearoff=0)
 helpMenu.add_command(label="Help")
@@ -75,7 +76,8 @@ buttonsFrame = Frame(root)
 buttonsFrame.pack()
 
 # Hide
-hideButton = Button(buttonsFrame, text="Hide Text", command=lambda:op.hideText(textBlock.get("1.0", 'end-1c'), inputImagePath.get()))
+hideButton = Button(buttonsFrame, text="Hide Text", command=lambda:op.hideText(textBlock.get("1.0", 'end-1c'), 
+                                                                               inputImagePath.get()))
 hideButton.grid(row=0, column=0, sticky="e", padx=10, pady=10)
 # Recover
 recoverButton = Button(buttonsFrame, text="Recover Text", command=lambda:op.recoverText(textBlock))
