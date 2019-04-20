@@ -12,11 +12,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/layout.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="24" column="97" selection-start-line="24" selection-start-column="97" selection-end-line="24" selection-end-column="97" />
+            <state relative-caret-position="172">
+              <caret line="23" selection-start-line="23" selection-end-line="23" selection-end-column="40" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -24,11 +24,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/operations.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="190" column="5" selection-start-line="190" selection-start-column="5" selection-end-line="190" selection-end-column="5" />
+            <state relative-caret-position="464">
+              <caret line="251" column="25" selection-start-line="251" selection-start-column="25" selection-end-line="251" selection-end-column="25" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -64,8 +64,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/../Python/Práctica guiada/CRUD.py" />
-        <option value="$PROJECT_DIR$/layout.py" />
         <option value="$PROJECT_DIR$/operations.py" />
+        <option value="$PROJECT_DIR$/layout.py" />
       </list>
     </option>
   </component>
@@ -187,22 +187,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/layout.py">
+    <entry file="file://$PROJECT_DIR$/operations.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="24" column="97" selection-start-line="24" selection-start-column="97" selection-end-line="24" selection-end-column="97" />
+        <state relative-caret-position="464">
+          <caret line="251" column="25" selection-start-line="251" selection-start-column="25" selection-end-line="251" selection-end-column="25" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/operations.py">
+    <entry file="file://$PROJECT_DIR$/layout.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="190" column="5" selection-start-line="190" selection-start-column="5" selection-end-line="190" selection-end-column="5" />
+        <state relative-caret-position="172">
+          <caret line="23" selection-start-line="23" selection-end-line="23" selection-end-column="40" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>

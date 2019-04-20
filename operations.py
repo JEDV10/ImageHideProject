@@ -238,16 +238,16 @@ def recoverText(textBlock, hidden_text_image_path):
             byte += obtainLSB(obtainBinaryRepresentation(green))
             if len(byte) >= 8:
                 message += charFromAscii(binaryToDecimal(byte))
-                if (message[-9:] == end_string):
-                    message = message[0:len(message) - 9]
+                if (message[-len(end_string):] == end_string):
+                    message = message[0:len(message) - len(end_string)]
                     break
                 byte = ""
 
             byte += obtainLSB(obtainBinaryRepresentation(blue))
             if len(byte) >= 8:
                 message += charFromAscii(binaryToDecimal(byte))
-                if (message[-9:] == end_string):
-                    message = message[0:len(message) - 9]
+                if (message[-len(end_string):] == end_string):
+                    message = message[0:len(message) - len(end_string)]
                     break
                 byte = ""
 
