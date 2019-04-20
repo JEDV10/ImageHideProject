@@ -127,7 +127,7 @@ def obtainInitOutputImagePath(original_path):
     """
     return original_path[:(original_path.rfind("/"))]
 
-def hideText(message, original_image_path, output_image_path="C:/Users/EQUIPO/ImageHideProject.png"):
+def hideText(message, original_image_path):
     """
     Main function to hide text inside images.
     It opens the image at given path, converts the given message to binary and
@@ -188,7 +188,6 @@ def hideText(message, original_image_path, output_image_path="C:/Users/EQUIPO/Im
 
     initial_image_path = obtainInitOutputImagePath(original_image_path)
     saveImage(initial_image_path, image)
-    #image.save(output_image_path)
 
 
 # ----- Recover Text Operations -----
@@ -204,13 +203,21 @@ def charFromAscii(numero):
     """
     return chr(numero)
 
-def recoverText(textBlock, hidden_text_image_path):
+def obtainModifiedImagePath():
+    """
+    Return path to modified image selected by user
+    """
+    return filedialog.askopenfilename(title="Open", initialdir="C:",
+                                         filetypes=(("Images", "*.png"), ("All Files", "*.*")))
+
+def recoverText(textBlock):
     """
     Main function to recover text from images.
     It opens the modified image at given path, extracts LSBs from each pixel and
     reconstruct the message until it finds termination string
     """
     print("Recovering message...")
+    hidden_text_image_path = obtainModifiedImagePath()
     image = Image.open(hidden_text_image_path)
     print(hidden_text_image_path)
     print(type(hidden_text_image_path))

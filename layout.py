@@ -78,7 +78,7 @@ buttonsFrame.pack()
 hideButton = Button(buttonsFrame, text="Hide Text", command=lambda:op.hideText(textBlock.get("1.0", 'end-1c'), inputImagePath.get()))
 hideButton.grid(row=0, column=0, sticky="e", padx=10, pady=10)
 # Recover
-recoverButton = Button(buttonsFrame, text="Recover Text", command=lambda:op.recoverText(textBlock, "C:/Users/EQUIPO/ImageHideProject.png"))
+recoverButton = Button(buttonsFrame, text="Recover Text", command=lambda:op.recoverText(textBlock))
 recoverButton.grid(row=0, column=1, sticky="e", padx=10, pady=10)
 
 
