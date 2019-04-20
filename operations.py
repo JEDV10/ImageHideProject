@@ -75,7 +75,7 @@ def saveImage(initial_image_path, image):
 
 
 # ----- Hide Text Operations -----
-head_string = "@$€XIII€$@"
+head_string = "@$*XIII*$@"
 end_string = "#&Íkarvs&#"
 
 
