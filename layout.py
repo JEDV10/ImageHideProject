@@ -14,6 +14,7 @@ def update(event):
 
 # ----- Graphic Interface -----
 root = Tk()
+root.title("Image Hide App")
 
 # ----- Options Bar -----
 barMenu = Menu(root)
