@@ -138,7 +138,7 @@ def obtainLSB(byte):
 def charFromAscii(numero):
     return chr(numero)
 
-def recoverText(hidden_text_image_path):
+def recoverText(textBlock, hidden_text_image_path):
     print("Recovering message...")
     image = Image.open(hidden_text_image_path)
     print(hidden_text_image_path)
@@ -187,3 +187,5 @@ def recoverText(hidden_text_image_path):
             continue
         break
     print(message)
+    textBlock.delete(1.0, END)
+    textBlock.insert('1.0', message)
