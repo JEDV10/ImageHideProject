@@ -134,11 +134,6 @@ def hideText(message, original_image_path):
     modify LSBs of each pixel in the image acording to the binary representation
     of the original message
     """
-    print("Hiding message...")
-    print(original_image_path)
-    print(type(original_image_path))
-    print(message)
-    print(type(message))
     image = Image.open(original_image_path)
     pixels = image.load()
 
@@ -180,10 +175,8 @@ def hideText(message, original_image_path):
             continue
         break
 
-    if counter >= total_lenght:
-        print("Message hidden correctly.")
-    else:
-        print("Warning: {} remaining chars."
+    if (counter < total_lenght):
+        messagebox.showwarning("Warning", "Warning: {} remaining chars."
               .format(math.floor((total_lenght - counter) / 8)))
 
     initial_image_path = obtainInitOutputImagePath(original_image_path)
@@ -216,11 +209,8 @@ def recoverText(textBlock):
     It opens the modified image at given path, extracts LSBs from each pixel and
     reconstruct the message until it finds termination string
     """
-    print("Recovering message...")
     hidden_text_image_path = obtainModifiedImagePath()
     image = Image.open(hidden_text_image_path)
-    print(hidden_text_image_path)
-    print(type(hidden_text_image_path))
     pixels = image.load()
 
     (columns, rows) = image.size
@@ -261,6 +251,7 @@ def recoverText(textBlock):
         else:
             continue
         break
-    print(message)
+
     textBlock.delete(1.0, END)
     textBlock.insert('1.0', message)
+    messagebox.showinfo("Info", "Hidden text recovered correctly")
