@@ -43,7 +43,7 @@ def saveText(text):
     now = datetime.now()
     date_format = "%Y-%m-%d_%H.%M.%S"
     date_string = now.strftime(date_format)
-    filename = filedialog.asksaveasfilename(initialfile= "recovered_text_"+date_string+".txt",
+    filename = filedialog.asksaveasfilename(initialfile= "ImageHide_text_"+date_string+".txt",
                                             defaultextension=".txt", title="Select file", initialdir="C:",
                                             filetypes=(("Text File", "*.txt"), ("All Files", "*.*")))
     f = open(filename, 'w')
