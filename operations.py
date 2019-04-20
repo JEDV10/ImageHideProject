@@ -56,7 +56,7 @@ def saveText(text):
     f = open(filename, 'w')
     f.write(text)
     f.close()
-    messagebox.showinfo("Info", "Text file saved correctly")
+    messagebox.showinfo("Info", "Text file saved correctly.")
 
 
 def saveImage(initial_image_path, image):
@@ -70,12 +70,14 @@ def saveImage(initial_image_path, image):
                                             initialdir=initial_image_path,
                                             filetypes=(("Images", "*.png"), ("All Files", "*.*")))
     image.save(filename)
-    messagebox.showinfo("Info", "Modified image saved correctly")
+    messagebox.showinfo("Info", "Modified image saved correctly.")
 
 
 
 # ----- Hide Text Operations -----
-end_string = "#&Ícaro&#"
+head_string = "@$€XIII€$@"
+end_string = "#&Íkarvs&#"
+
 
 def obtainAsciiRepresentation(char):
     """
@@ -139,7 +141,7 @@ def hideText(message, original_image_path):
 
     (columns, rows) = image.size
 
-    list = obtainBitsList(message + end_string)
+    list = obtainBitsList(head_string + message + end_string)
     counter = 0
     total_lenght = len(list)
     for x in range(rows):
@@ -217,6 +219,7 @@ def recoverText(textBlock):
 
     byte = ""
     message = ""
+    found = False
     for x in range(rows):
         for y in range(columns):
             pixel = pixels[x, y]
@@ -227,6 +230,9 @@ def recoverText(textBlock):
             byte += obtainLSB(obtainBinaryRepresentation(red))
             if len(byte) >= 8:
                 message += charFromAscii(binaryToDecimal(byte))
+                if (message[-len(head_string):] == head_string):
+                    message = ""
+                    found = True
                 if (message[-len(end_string):] == end_string):
                     message = message[0:len(message) - len(end_string)]
                     break
@@ -235,6 +241,9 @@ def recoverText(textBlock):
             byte += obtainLSB(obtainBinaryRepresentation(green))
             if len(byte) >= 8:
                 message += charFromAscii(binaryToDecimal(byte))
+                if (message[-len(head_string):] == head_string):
+                    message = ""
+                    found = True
                 if (message[-len(end_string):] == end_string):
                     message = message[0:len(message) - len(end_string)]
                     break
@@ -243,6 +252,9 @@ def recoverText(textBlock):
             byte += obtainLSB(obtainBinaryRepresentation(blue))
             if len(byte) >= 8:
                 message += charFromAscii(binaryToDecimal(byte))
+                if (message[-len(head_string):] == head_string):
+                    message = ""
+                    found = True
                 if (message[-len(end_string):] == end_string):
                     message = message[0:len(message) - len(end_string)]
                     break
@@ -252,6 +264,9 @@ def recoverText(textBlock):
             continue
         break
 
-    textBlock.delete(1.0, END)
-    textBlock.insert('1.0', message)
-    messagebox.showinfo("Info", "Hidden text recovered correctly")
+    if found:
+        textBlock.delete(1.0, END)
+        textBlock.insert('1.0', message)
+        messagebox.showinfo("Info", "Hidden text recovered correctly.")
+    else:
+        messagebox.showwarning("Warning", "No hidden text found. Try other image.")
