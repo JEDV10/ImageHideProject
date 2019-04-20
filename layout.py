@@ -21,7 +21,6 @@ barMenu = Menu(root)
 root.config(menu=barMenu, width=300, height=300)
 # File menu
 fileMenu = Menu(barMenu, tearoff=0)
-fileMenu.add_command(label="Save Image")
 fileMenu.add_command(label="Save Text", command=lambda:op.saveText(textBlock.get("1.0", 'end-1c')))
 fileMenu.add_command(label="Clear", command=lambda:op.deleteFields(inputImagePath, charCounter, textBlock))
 fileMenu.add_separator()
