@@ -83,6 +83,4 @@ hideButton.grid(row=0, column=0, sticky="e", padx=10, pady=10)
 recoverButton = Button(buttonsFrame, text="Recover Text", command=lambda:op.recoverText(textBlock))
 recoverButton.grid(row=0, column=1, sticky="e", padx=10, pady=10)
 
-
-
 root.mainloop()

@@ -4,6 +4,8 @@ from tkinter import filedialog
 from tkinter import messagebox
 from datetime import datetime
 from PIL import Image
+import numpy as np
+from skimage import io
 
 
 # ----- Menu Operations -----
@@ -69,6 +71,21 @@ def saveImage(initial_image_path, image):
                                             defaultextension=".png", title="Select file",
                                             initialdir=initial_image_path,
                                             filetypes=(("Images", "*.png"), ("All Files", "*.*")))
+    image_uint8 = np.array(image, dtype=np.uint8) # Take care of this line. uint8 can convert 254 in 255.
+    io.imsave(filename, image_uint8)
+    messagebox.showinfo("Info", "Modified image saved correctly.")
+
+
+def saveImage_old(initial_image_path, image):
+    """
+    Save new image with hidden message.
+    Creates a ".png" file
+    """
+    date_string = obtainDateString()
+    filename = filedialog.asksaveasfilename(initialfile="ImageHide_image_" + date_string + ".png",
+                                            defaultextension=".png", title="Select file",
+                                            initialdir=initial_image_path,
+                                            filetypes=(("Images", "*.png"), ("All Files", "*.*")))
     image.save(filename)
     messagebox.showinfo("Info", "Modified image saved correctly.")
 
@@ -98,7 +115,7 @@ def aboutMenu():
     """
     messagebox.showinfo("Help",
     '''Version:
-    v1.0 (April 21, 2019)
+    v1.1 (April 21, 2019)
     
 Author:
     J. Enrique Domínguez
@@ -170,6 +187,41 @@ def hideText(message, original_image_path):
     of the original message
     """
     try:
+        # ----- Read image -----
+        original_image = io.imread(original_image_path)
+        original_shape = original_image.shape
+
+        # ----- Create array with message -----
+        bit_list = obtainBitsList(head_string + message + end_string)
+        array_list = np.asarray(bit_list)
+        if (len(original_shape) > 2):  # Color image
+            array_list_expanded = np.append(array_list, np.zeros(
+                ((original_shape[0] * original_shape[1] * original_shape[2])) - len(array_list)))
+        else:  # B/W image
+            array_list_expanded = np.append(array_list,
+                                             np.zeros(((original_shape[0] * original_shape[1])) - len(array_list)))
+        array_list_expanded = array_list_expanded.reshape(original_shape).astype(float)
+        array_list_expanded = array_list_expanded.astype(int)
+
+        # ----- Obtain modified image -----
+        image_hidden = (original_image - (original_image % 2)) # Erase LSB
+        image_hidden = image_hidden + array_list_expanded # Add new LSB
+
+        # ----- Save modified image -----
+        image_hidden_path = obtainInitOutputImagePath(original_image_path)
+        saveImage(image_hidden_path, image_hidden)
+    except (OSError, ValueError):
+        messagebox.showwarning("Warning", "Select a valid image file.")
+
+
+def hideText_old(message, original_image_path):
+    """
+    Main function to hide text inside images.
+    It opens the image at given path, converts the given message to binary and
+    modify LSBs of each pixel in the image acording to the binary representation
+    of the original message
+    """
+    try:
         image = Image.open(original_image_path)
         pixels = image.load()
 
@@ -216,7 +268,7 @@ def hideText(message, original_image_path):
                   .format(math.floor((total_lenght - counter) / 16)))
 
         initial_image_path = obtainInitOutputImagePath(original_image_path)
-        saveImage(initial_image_path, image)
+        saveImage_old(initial_image_path, image)
     except OSError:
         messagebox.showwarning("Warning", "Select a valid image file.")
 
@@ -242,6 +294,49 @@ def obtainModifiedImagePath():
                                          filetypes=(("Images", "*.png"), ("All Files", "*.*")))
 
 def recoverText(textBlock):
+    """
+    Main function to recover text from images.
+    It opens the modified image at given path, extracts LSBs from each pixel and
+    reconstruct the message until it finds termination string
+    """
+    try:
+        # ----- Read image -----
+        hidden_text_image_path = obtainModifiedImagePath()
+        image_recovered = io.imread(hidden_text_image_path)
+
+        # ----- Processing -----
+        byte = 0
+        message = ""
+        counter = 0
+        found = False
+
+        info_recovered = image_recovered % 2 # Take LSBs
+        info_recoverded_reshaped = info_recovered.ravel()
+        for i in range(len(info_recoverded_reshaped)):
+            byte = byte * 2 + info_recoverded_reshaped[i]
+            counter += 1
+            if counter >= 16:
+                counter = 0
+                message += charFromAscii(byte)
+                if (message[-len(head_string):] == head_string):
+                    message = ""
+                    found = True
+                if (message[-len(end_string):] == end_string):
+                    message = message[0:len(message) - len(end_string)]
+                    break
+                byte = 0
+
+        if found:
+            textBlock.delete(1.0, END)
+            textBlock.insert('1.0', message)
+            messagebox.showinfo("Info", "Hidden text recovered correctly.")
+        else:
+            messagebox.showwarning("Warning", "No hidden text found. Try other image.")
+    except AttributeError:
+        messagebox.showwarning("Warning", "Select a valid image file.")
+
+
+def recoverText_old(textBlock):
     """
     Main function to recover text from images.
     It opens the modified image at given path, extracts LSBs from each pixel and
