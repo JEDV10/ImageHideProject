@@ -33,7 +33,7 @@ appMenu.add_command(label="Recover text", command=lambda:op.recoverText(textBloc
 # Help menu
 helpMenu = Menu(barMenu, tearoff=0)
 helpMenu.add_command(label="Help", command=lambda:op.helpMenu())
-helpMenu.add_command(label="About")
+helpMenu.add_command(label="About", command=lambda:op.aboutMenu())
 
 barMenu.add_cascade(label="File", menu=fileMenu)
 barMenu.add_cascade(label="App", menu=appMenu)

@@ -92,6 +92,20 @@ def helpMenu():
     ''')
 
 
+def aboutMenu():
+    """
+    About panel with informations about the version
+    """
+    messagebox.showinfo("Help",
+    '''Version:
+    v1.0 (April 21, 2019)
+    
+Author:
+    J. Enrique Domínguez
+    (je.dominguez.vidal@gmail.com)
+    ''')
+
+
 
 # ----- Hide Text Operations -----
 head_string = "@$€*XIII*€$@"
