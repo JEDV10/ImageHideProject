@@ -32,7 +32,7 @@ appMenu.add_command(label="Hide text", command=lambda:op.hideText(textBlock.get(
 appMenu.add_command(label="Recover text", command=lambda:op.recoverText(textBlock))
 # Help menu
 helpMenu = Menu(barMenu, tearoff=0)
-helpMenu.add_command(label="Help")
+helpMenu.add_command(label="Help", command=lambda:op.helpMenu())
 helpMenu.add_command(label="About")
 
 barMenu.add_cascade(label="File", menu=fileMenu)
@@ -76,7 +76,7 @@ buttonsFrame = Frame(root)
 buttonsFrame.pack()
 
 # Hide
-hideButton = Button(buttonsFrame, text="Hide Text", command=lambda:op.hideText(textBlock.get("1.0", 'end-1c'), 
+hideButton = Button(buttonsFrame, text="Hide Text", command=lambda:op.hideText(textBlock.get("1.0", 'end-1c'),
                                                                                inputImagePath.get()))
 hideButton.grid(row=0, column=0, sticky="e", padx=10, pady=10)
 # Recover

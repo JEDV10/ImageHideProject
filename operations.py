@@ -73,6 +73,22 @@ def saveImage(initial_image_path, image):
     messagebox.showinfo("Info", "Modified image saved correctly.")
 
 
+def helpMenu():
+    messagebox.showinfo("Help",
+    '''
+    How to use main functions:
+    
+    - Hide Text: It allows you to hide text inside an image.
+        1) Choose your image using "Select Image" button.
+        2) Write your text on the "Text" block.
+        3) Save the new image with the "Hide Text" button.
+        
+    - Recover Text: It allows you to recover the hidden text.
+        1) Select the modified image with "Recover Text".
+        2) Save your text as ".txt" using "File -> Save Text".
+    ''')
+
+
 
 # ----- Hide Text Operations -----
 head_string = "@$€*XIII*€$@"
