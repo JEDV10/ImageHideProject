@@ -74,9 +74,12 @@ def saveImage(initial_image_path, image):
 
 
 def helpMenu():
+    """
+    Help panel with instructions to use each functionality
+    """
     messagebox.showinfo("Help",
     '''
-    How to use main functions:
+    How to use main functionalities:
     
     - Hide Text: It allows you to hide text inside an image.
         1) Choose your image using "Select Image" button.
