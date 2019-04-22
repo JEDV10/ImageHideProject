@@ -217,17 +217,15 @@ def hideText(message, original_image_path):
     try:
         # ----- Read image -----
         original_image = io.imread(original_image_path)
+        original_size = original_image.size
         original_shape = original_image.shape
 
         # ----- Create array with message -----
         bit_list = obtainBitsList(head_string + message + end_string)
         array_list = np.asarray(bit_list)
-        if (len(original_shape) > 2):  # Color image
-            array_list_expanded = np.append(array_list, np.zeros(
-                ((original_shape[0] * original_shape[1] * original_shape[2])) - len(array_list)))
-        else:  # B/W image
-            array_list_expanded = np.append(array_list,
-                                             np.zeros(((original_shape[0] * original_shape[1])) - len(array_list)))
+
+        array_list_expanded = np.append(array_list, np.zeros(original_size - len(array_list)))
+        
         array_list_expanded = array_list_expanded.reshape(original_shape).astype(float)
         array_list_expanded = array_list_expanded.astype(int)
 
