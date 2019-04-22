@@ -60,10 +60,13 @@ def saveText(text):
     filename = filedialog.asksaveasfilename(initialfile= "ImageHide_text_"+date_string+".txt",
                                             defaultextension=".txt", title="Select file", initialdir="C:",
                                             filetypes=(("Text File", "*.txt"), ("All Files", "*.*")))
-    f = open(filename, 'w')
-    f.write(text)
-    f.close()
-    messagebox.showinfo("Info", "Text file saved correctly.")
+    try:
+        f = open(filename, 'w')
+        f.write(text)
+        f.close()
+        messagebox.showinfo("Info", "Text file saved correctly.")
+    except FileNotFoundError:
+        pass
 
 
 def saveImage(initial_image_path, image):
@@ -235,8 +238,10 @@ def hideText(message, original_image_path):
         # ----- Save modified image -----
         image_hidden_path = obtainInitOutputImagePath(original_image_path)
         saveImage(image_hidden_path, image_hidden)
-    except (OSError, ValueError):
+    except OSError:
         messagebox.showwarning("Warning", "Select a valid image file. (.png)")
+    except ValueError:
+        pass
 
 
 def hideText_old(message, original_image_path):
@@ -359,6 +364,8 @@ def recoverText(textBlock):
             messagebox.showwarning("Warning", "No hidden text found. Try other image.")
     except AttributeError:
         messagebox.showwarning("Warning", "Select a valid image file.")
+    except ValueError:
+        pass
 
 
 def recoverText_old(textBlock):
