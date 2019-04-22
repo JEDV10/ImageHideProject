@@ -132,6 +132,11 @@ Author:
 
 
 def updateCharCounter(textBlock, charCounter, image_path, charLabel):
+    """
+    Update char counter forcing the user to choose a valid file to hide before writing.
+    It also checks the length of the text avoiding texts longer than the maximum lenght
+    (lenght depends on each image)
+    """
     if (image_path == ""):
         charCounter.set("0/0 (0)")
         textBlock.delete(1.0, END)
@@ -140,7 +145,7 @@ def updateCharCounter(textBlock, charCounter, image_path, charLabel):
         # ----- Calculate max text length allowed -----
         image = io.imread(image_path)
         image_size = image.size
-        char_limit = min(10, int(((image_size/16)/2)-len(head_string)-len(end_string)))
+        char_limit = min(3000, int(((image_size/16)/2)-len(head_string)-len(end_string)))
         size_text = len(textBlock.get("1.0", 'end-1c'))
         # ----- Check text is not longer than max length
         if (size_text >= char_limit):
@@ -224,8 +229,13 @@ def hideText(message, original_image_path):
         bit_list = obtainBitsList(head_string + message + end_string)
         array_list = np.asarray(bit_list)
 
-        array_list_expanded = np.append(array_list, np.zeros(original_size - len(array_list)))
-        
+        #array_list_expanded = np.append(array_list, np.zeros(original_size - len(array_list)))
+        bits_to_add = original_size - len(array_list)
+        index = (np.random.randint(0, (bits_to_add / 16))) * 16
+        array_list_expanded = np.append(np.random.randint(low=0, high=2, size=index), array_list)
+        array_list_expanded = np.append(array_list_expanded,
+                                         np.random.randint(low=0, high=2, size=bits_to_add - index))
+
         array_list_expanded = array_list_expanded.reshape(original_shape).astype(float)
         array_list_expanded = array_list_expanded.astype(int)
 
