@@ -14,7 +14,7 @@ def update(event):
 
 # ----- Graphic Interface -----
 root = Tk()
-root.title("Image Hide App")
+root.title("Image Hide")
 
 # ----- Options Bar -----
 barMenu = Menu(root)
@@ -61,7 +61,7 @@ textFrame.pack()
 # Text
 textLabel = Label(textFrame, text="Text:")
 textLabel.grid(row=0, column=0, sticky="ne", padx=5, pady=10)
-textBlock = Text(textFrame, width=50, height=10)
+textBlock = Text(textFrame, width=50, height=20)
 textBlock.grid(row=0, column=1, padx=10, pady=10)
 textBlock.bind("<KeyRelease>", update)
 scrollVert = Scrollbar(textFrame, command=textBlock.yview)
