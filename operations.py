@@ -8,6 +8,11 @@ import numpy as np
 from skimage import io
 
 
+# ----- Variables -----
+head_string = "@$€*XIII*€$@"
+end_string = "#&Íkarvs&#"
+
+
 # ----- Menu Operations -----
 def imagePathFinder(path):
     """
@@ -115,7 +120,7 @@ def aboutMenu():
     """
     messagebox.showinfo("Help",
     '''Version:
-    v1.1 (April 21, 2019)
+    v0.2 (April 21, 2019)
     
 Author:
     J. Enrique Domínguez
@@ -123,12 +128,32 @@ Author:
     ''')
 
 
+def updateCharCounter(textBlock, charCounter, image_path, charLabel):
+    if (image_path == ""):
+        charCounter.set("0/0 (0)")
+        textBlock.delete(1.0, END)
+        messagebox.showwarning("Warning", "Select a valid image file before write.")
+    else:
+        # ----- Calculate max text length allowed -----
+        image = io.imread(image_path)
+        image_size = image.size
+        char_limit = min(10, int(((image_size/16)/2)-len(head_string)-len(end_string)))
+        size_text = len(textBlock.get("1.0", 'end-1c'))
+        # ----- Check text is not longer than max length
+        if (size_text >= char_limit):
+            text = textBlock.get("1.0", 'end-1c')
+            textBlock.delete(1.0, END)
+            textBlock.insert(END, text[0:char_limit])
+            size_text = len(textBlock.get("1.0", 'end-1c')) # As textBlock has just changed, must recalculate
+            charLabel.config(fg="red")
+        else:
+            charLabel.config(fg="black")
+
+        charCounter.set( str(size_text)+"/"+str(char_limit)+" ("+str(char_limit-size_text)+")" )
+
+
 
 # ----- Hide Text Operations -----
-head_string = "@$€*XIII*€$@"
-end_string = "#&Íkarvs&#"
-
-
 def obtainAsciiRepresentation(char):
     """
     Return ASCII representation of given char
@@ -211,7 +236,7 @@ def hideText(message, original_image_path):
         image_hidden_path = obtainInitOutputImagePath(original_image_path)
         saveImage(image_hidden_path, image_hidden)
     except (OSError, ValueError):
-        messagebox.showwarning("Warning", "Select a valid image file.")
+        messagebox.showwarning("Warning", "Select a valid image file. (.png)")
 
 
 def hideText_old(message, original_image_path):

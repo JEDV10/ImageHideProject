@@ -9,7 +9,7 @@ Each functionality use one or several functions from "operations.py" module.
 
 
 def update(event):
-    charCounter.set(str(len(textBlock.get("1.0", 'end-1c'))))
+    op.updateCharCounter(textBlock, charCounter, inputImagePath.get(), charLabel)
 
 
 # ----- Graphic Interface -----
@@ -41,8 +41,8 @@ barMenu.add_cascade(label="Help", menu=helpMenu)
 
 
 # ----- Input Elements -----
-inputImagePath = StringVar()
-charCounter = StringVar()
+inputImagePath = StringVar(value="")
+charCounter = StringVar(value="0/0 (0)")
 
 pathFrame = Frame(root)
 pathFrame.pack()
@@ -68,7 +68,7 @@ scrollVert = Scrollbar(textFrame, command=textBlock.yview)
 scrollVert.grid(row=0, column=2, sticky="nsew")
 textBlock.config(yscrollcommand=scrollVert.set)
 charLabel = Label(textFrame, textvariable=charCounter)
-charLabel.grid(row=1, column=0, sticky="ne", padx=10, pady=10)
+charLabel.grid(row=1, column=1, sticky="nw", padx=10, pady=10)
 
 
 # ----- Operation Buttons -----
