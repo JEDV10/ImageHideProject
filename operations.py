@@ -123,7 +123,7 @@ def aboutMenu():
     """
     messagebox.showinfo("Help",
     '''Version:
-    v0.2 (April 21, 2019)
+    v0.3 (April 22, 2019)
     
 Author:
     J. Enrique Domínguez
