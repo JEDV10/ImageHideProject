@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import filedialog
 from datetime import datetime
 from PIL import Image
-from skimage import obtainInitOutputImagePath
+from skimage import io
 import numpy as np
 
 
