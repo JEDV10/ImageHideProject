@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import filedialog
 from datetime import datetime
 from PIL import Image
-from skimage import io
+from skimage import obtainInitOutputImagePath
 import numpy as np
 
 
@@ -108,7 +108,7 @@ def aboutMenu():
     """
     messagebox.showinfo("Help",
     '''Version:
-    v0.4 (April 22, 2019)
+    v0.5 (April 30, 2019)
     
 Author:
     J. Enrique Domínguez
