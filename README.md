@@ -11,6 +11,7 @@ Graphic Interface created using _Tkinter_
 Project created on Windows.
 
 _NumPy_, _scikit-image_, _Crypto_ and _Tkinter_ libraries are necessary (_Tkinter_ library comes in default with every Python installation).
+
 Installation using "pip":
 ```
 pip install numpy
