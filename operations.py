@@ -6,10 +6,16 @@ from datetime import datetime
 from skimage import io
 import numpy as np
 
+import base64
+from Crypto.Cipher import AES
+from Crypto.Hash import SHA256
+from Crypto import Random
+
 
 # ----- Variables -----
 head_string = "@$€*XIII*€$@"
 end_string = "#&Íkarvs&#"
+password = "originalPass€"
 
 
 # ----- Menu Operations -----
@@ -22,13 +28,14 @@ def imagePathFinder(path):
     path.set(image)
 
 
-def deleteFields(inputImagePath, charCounter, textBlock):
+def deleteFields(inputImagePath, charCounter, textBlock, passwordInput):
     """
     Erase all data in each input field
     """
     inputImagePath.set("")
     charCounter.set("0/0 (0)")
     textBlock.delete(1.0, END)
+    passwordInput.set("")
 
 
 def exitApp(root):
@@ -150,6 +157,20 @@ def updateCharCounter(textBlock, charCounter, image_path, charLabel):
 
 
 # ----- Hide Text Operations -----
+def encrypt(key, source):
+    """
+    Encrypt a message using a key and SHA-256 protocol
+    Returns an encrypted string in "utf-16"
+    """
+    key = SHA256.new(key).digest()  # use SHA-256 over our key to get a proper-sized AES key
+    initializationVector = Random.new().read(AES.block_size)  # generate IV from random changing consecutive executions
+    encryptor = AES.new(key, AES.MODE_CBC, initializationVector)
+    padding = AES.block_size - len(source) % AES.block_size  # calculate needed padding
+    source += bytes([padding]) * padding  # Python 2.x: source += chr(padding) * padding
+    data = initializationVector + encryptor.encrypt(source)  # store the IV at the beginning and encrypt
+    return base64.b64encode(data).decode("utf-16")
+
+
 def obtainAsciiRepresentation(char):
     """
     Return ASCII representation of given char
@@ -184,12 +205,12 @@ def obtainInitOutputImagePath(original_path):
     return original_path[:(original_path.rfind("/"))]
 
 
-def hideText(message, original_image_path):
+def hideText(message, original_image_path, passwordInput):
     """
     Main function to hide text inside images.
     It opens the image at given path, converts the given message to binary and
     modify LSBs of each pixel in the image acording to the binary representation
-    of the original message
+    of the encrypted message (SHA-256 encrypt).
     """
     try:
         # ----- Read image -----
@@ -197,11 +218,19 @@ def hideText(message, original_image_path):
         original_size = original_image.size
         original_shape = original_image.shape
 
+        # ----- Cryptography (encrypt) -----
+        if (passwordInput != ""): # Using a password
+            my_password = (password + passwordInput).encode("utf-16")
+        else: # Not using a password (default password)
+            my_password = password.encode("utf-16")
+
+        message_encoded = message.encode("utf-16")
+        message_encrypted = encrypt(my_password, message_encoded)
+        bit_list = obtainBitsList(head_string + message_encrypted + end_string)
+
         # ----- Create array with message -----
-        bit_list = obtainBitsList(head_string + message + end_string)
         array_list = np.asarray(bit_list)
 
-        #array_list_expanded = np.append(array_list, np.zeros(original_size - len(array_list)))
         bits_to_add = original_size - len(array_list)
         index = (np.random.randint(0, (bits_to_add / 16))) * 16
         array_list_expanded = np.append(np.random.randint(low=0, high=2, size=index), array_list)
@@ -220,7 +249,8 @@ def hideText(message, original_image_path):
         saveImage(image_hidden_path, image_hidden)
     except OSError:
         messagebox.showwarning("Warning", "Select a valid image file. (.png)")
-    except ValueError:
+    except ValueError: # When closed select window without selectiong a valid image
+        #messagebox.showwarning("Warning", "Do not close without selecting a valid image file.")
         pass
 
 
@@ -229,6 +259,22 @@ def hideText(message, original_image_path):
 
 
 # ----- Recover Text Operations -----
+def decrypt(key, source):
+    """
+    Decrypt a message using a key and SHA-256 protocol
+    Returns a decrypted string in "utf-16"
+    """
+    source = base64.b64decode(source.encode("utf-16"))
+    key = SHA256.new(key).digest()  # use SHA-256 over our key to get a proper-sized AES key
+    initializationVector = source[:AES.block_size]  # extract the IV from the beginning
+    decryptor = AES.new(key, AES.MODE_CBC, initializationVector)
+    data = decryptor.decrypt(source[AES.block_size:])  # decrypt
+    padding = data[-1]  # pick the padding value from the end; Python 2.x: ord(data[-1])
+    if data[-padding:] != bytes([padding]) * padding:  # Python 2.x: chr(padding) * padding
+        raise RuntimeError("Invalid padding...")
+    return data[:-padding]  # remove the padding
+
+
 def charFromAscii(numero):
     """
     Return char representation of given decimal number
@@ -244,11 +290,12 @@ def obtainModifiedImagePath():
                                          filetypes=(("Images", "*.png"), ("All Files", "*.*")))
 
 
-def recoverText(textBlock):
+def recoverText(textBlock, passwordInput):
     """
     Main function to recover text from images.
     It opens the modified image at given path, extracts LSBs from each pixel and
-    reconstruct the message until it finds termination string
+    reconstruct the encrypted message until it finds termination string.
+    Finally, it dencrypts the message (SHA-256 encrypt).
     """
     try:
         # ----- Read image -----
@@ -278,12 +325,24 @@ def recoverText(textBlock):
                 byte = 0
 
         if found:
+            # ----- Cryptography (decrypt) -----
+            if (passwordInput != ""): # Using a password
+                my_password = (password + passwordInput).encode("utf-16")
+            else: # Not using a password (default password)
+                my_password = password.encode("utf-16")
+
+            message_decrypted = decrypt(my_password, message)
+            message_decoded = message_decrypted.decode("utf-16")
             textBlock.delete(1.0, END)
-            textBlock.insert('1.0', message)
+            textBlock.insert('1.0', message_decoded)
+
             messagebox.showinfo("Info", "Hidden text recovered correctly.")
         else:
             messagebox.showwarning("Warning", "No hidden text found. Try other image.")
     except AttributeError:
         messagebox.showwarning("Warning", "Select a valid image file.")
-    except ValueError:
+    except ValueError: # When closed select window without selectiong a valid image
+        #messagebox.showwarning("Warning", "Do not close without selecting a valid image file.")
         pass
+    except RuntimeError: # Error with decrypt
+        messagebox.showwarning("Warning", "Something went wrong decrypting. Try the correct password.")
