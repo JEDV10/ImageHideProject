@@ -100,12 +100,15 @@ def helpMenu():
     
     - Hide Text: It allows you to hide text inside an image.
         1) Choose your image using "Select Image" button.
-        2) Write your text on the "Text" block.
-        3) Save the new image with the "Hide Text" button.
+        2) Type the password that you want (or leave it blank
+           if you do not want any password).
+        3) Write your text on the "Text" block.
+        4) Save the new image with the "Hide Text" button.
         
     - Recover Text: It allows you to recover the hidden text.
-        1) Select the modified image with "Recover Text".
-        2) Save your text as ".txt" using "File -> Save Text".
+        1) Type the correct password (it can be blank).
+        2) Select the modified image with "Recover Text".
+        3) Save your text as ".txt" using "File -> Save Text".
     ''')
 
 
@@ -115,7 +118,7 @@ def aboutMenu():
     """
     messagebox.showinfo("Help",
     '''Version:
-    v0.5 (April 30, 2019)
+    v0.6 (May 1, 2019)
     
 Author:
     J. Enrique Domínguez
